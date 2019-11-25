@@ -10,15 +10,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 `;
 
-const INSERIR_USUARIO_1 = 
-`
-INSERT INTO usuarios (
-    nome_completo, 
-    email,
-    senha
-) SELECT 'Rafael Cunha', 'rafael@outlook.com', '123' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE email = 'rafael@outlook.com')
-`;
-
 const STOP_SCHEMA = 
 `
 CREATE TABLE IF NOT EXISTS stop (
@@ -31,15 +22,88 @@ CREATE TABLE IF NOT EXISTS stop (
 )
 `;
 
-const INSERIR_STOP_1 = 
+
+const COIN_SCHEMA = 
 `
-INSERT INTO STOP (
+CREATE TABLE IF NOT EXISTS coin (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL, 
+    main  TEXT NOT NULL,
+    secondary  TEXT  
+)
+`;
+
+const INSERIR_COIN_1 = 
+`
+INSERT INTO coin (
+    name, 
+    main,
+    secondary
+) SELECT 'BTCLTC', 'BTC', 'LTC' WHERE NOT EXISTS (SELECT * FROM coin WHERE name = 'BTCLTC')
+`;
+
+const INSERIR_COIN_2 = 
+`
+INSERT INTO coin (
+    name, 
+    main,
+    secondary
+) SELECT 'BTCZEC', 'BTC', 'ZEC' WHERE NOT EXISTS (SELECT * FROM coin WHERE name = 'BTCLTC')
+`;
+
+const INSERIR_COIN_3 = 
+`
+INSERT INTO coin (
+    name, 
+    main,
+    secondary
+) SELECT 'LTCUSDT', 'LTC', 'USDT' WHERE NOT EXISTS (SELECT * FROM coin WHERE name = 'LTCUSDT')
+`;
+
+const INSERIR_COIN_4 = 
+`
+INSERT INTO coin (
+    name, 
+    main,
+    secondary
+) SELECT 'BTCUSDT', 'BTC', 'USDT' WHERE NOT EXISTS (SELECT * FROM coin WHERE name = 'BTCUSDT')
+`;
+
+const EXCHANGE_COIN_SCHEMA = 
+`
+CREATE TABLE IF NOT EXISTS EXCHANGE_COIN (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    coinId TEXT NOT NULL, 
+    exchangeId  TEXT NOT NULL,
+    coinExchange  TEXT NOT NULL 
+)
+`;
+
+const INSERIR_EXCHANGE_COIN_1 = 
+`
+INSERT INTO EXCHANGE_COIN (
+    coinId, 
     exchangeId,
-    usuarioId,
-    coinId,
-    stop,
-    lim
-) SELECT 1,1,1,8000,7500 WHERE NOT EXISTS (SELECT * FROM STOP WHERE id = 1)
+    coinExchange
+) SELECT 1, 1, 'BTCLTC' WHERE NOT EXISTS (SELECT * FROM EXCHANGE_COIN WHERE coinExchange = 'BTCLTC' and exchangeId = 1 ) 
+`;
+
+const INSERIR_EXCHANGE_COIN_2 = 
+`
+INSERT INTO EXCHANGE_COIN (
+    coinId, 
+    exchangeId,
+    coinExchange
+) SELECT 4, 1, 'BTCUSD' WHERE NOT EXISTS (SELECT * FROM EXCHANGE_COIN WHERE coinExchange = 'BTCUSDT' and exchangeId = 1 ) 
+`;
+
+const INSERIR_EXCHANGE_COIN_3 = 
+`
+INSERT INTO EXCHANGE_COIN (
+    coinId, 
+    exchangeId,
+    coinExchange
+) SELECT 4, 2, 'BTCUSDT' WHERE NOT EXISTS (SELECT * FROM EXCHANGE_COIN WHERE coinExchange = 'BTCUSDT' and exchangeId = 2 ) 
 `;
 
 const EXCHANGE_SCHEMA = 
@@ -49,6 +113,26 @@ CREATE TABLE IF NOT EXISTS EXCHANGE (
     name TEXT NOT NULL, 
     url  TEXT 
 )
+`;
+
+const INSERIR_USUARIO_1 = 
+`
+INSERT INTO usuarios (
+    nome_completo, 
+    email,
+    senha
+) SELECT 'Rafael Cunha', 'rafael@outlook.com', '123' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE email = 'rafael@outlook.com')
+`;
+
+const INSERIR_STOP_1 = 
+`
+INSERT INTO STOP (
+    exchangeId,
+    usuarioId,
+    coinId,
+    stop,
+    lim
+) SELECT 1,1,1,8000,7500 WHERE NOT EXISTS (SELECT * FROM STOP WHERE id = 1)
 `;
 
 const INSERIR_EXCHANGE_1 = 
@@ -76,6 +160,15 @@ bd.serialize(() => {
     bd.run(EXCHANGE_SCHEMA);
     bd.run(INSERIR_EXCHANGE_1);
     bd.run(INSERIR_EXCHANGE_2);
+    bd.run(COIN_SCHEMA);
+    bd.run(EXCHANGE_COIN_SCHEMA);
+    bd.run(INSERIR_COIN_1);
+    bd.run(INSERIR_COIN_2);
+    bd.run(INSERIR_COIN_3);
+    bd.run(INSERIR_COIN_4);
+    bd.run(INSERIR_EXCHANGE_COIN_1);
+    bd.run(INSERIR_EXCHANGE_COIN_2);
+    bd.run(INSERIR_EXCHANGE_COIN_3);
 
     bd.each("SELECT * FROM usuarios", (err, usuario) => {
         console.log('Usuario: ');
