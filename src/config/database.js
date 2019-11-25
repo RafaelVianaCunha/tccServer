@@ -25,9 +25,21 @@ CREATE TABLE IF NOT EXISTS stop (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     exchangeId TEXT NOT NULL, 
     usuarioId  INTEGER NOT NULL,
+    coinId  INTEGER NOT NULL,
     stop INTEGER NOT NULL,
     lim INTEGER NOT NULL    
 )
+`;
+
+const INSERIR_STOP_1 = 
+`
+INSERT INTO STOP (
+    exchangeId,
+    usuarioId,
+    coinId,
+    stop,
+    lim
+) SELECT 1,1,1,8000,7500 WHERE NOT EXISTS (SELECT * FROM STOP WHERE id = 1)
 `;
 
 const EXCHANGE_SCHEMA = 
@@ -60,14 +72,15 @@ bd.serialize(() => {
     bd.run(USUARIOS_SCHEMA);
     bd.run(INSERIR_USUARIO_1);
     bd.run(STOP_SCHEMA);
+    bd.run(INSERIR_STOP_1);
     bd.run(EXCHANGE_SCHEMA);
     bd.run(INSERIR_EXCHANGE_1);
     bd.run(INSERIR_EXCHANGE_2);
 
-    // bd.each("SELECT * FROM usuarios", (err, usuario) => {
-    //     console.log('Usuario: ');
-    //     console.log(usuario);
-    // });
+    bd.each("SELECT * FROM usuarios", (err, usuario) => {
+        console.log('Usuario: ');
+        console.log(usuario);
+    });
 
     // bd.each("SELECT * FROM EXCHANGE", (err, EXCHANGE) => {
     //     console.log('EXCHANGE: ');

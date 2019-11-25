@@ -16,12 +16,11 @@ class StopControlador {
     }
 
     lista() {
-        console.log("aqui33333");
         return function(req, resp) {
             const stopDao = new StopDao(db);
             stopDao.lista()
-                    .then(stop => {console.log(stop) ; 
-                                   resp.status(204).send(stop)
+                    .then(stop => {  
+                                   resp.send(stop);
                                 })
                     .catch(erro => console.log(erro));
         };
