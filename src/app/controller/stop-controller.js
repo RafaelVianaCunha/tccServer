@@ -26,12 +26,6 @@ class StopControlador {
         };
     }
 
-    formularioCadastro() {
-        return function(req, resp) {
-            resp.status(200);
-        };
-    }
-
     formularioEdicao() {
         return function(req, resp) {
             const id = req.params.id;
@@ -57,7 +51,7 @@ class StopControlador {
             }
     
             stopDao.adiciona(req.body)
-                    .then(resp.redirect(StopControlador.rotas().lista))
+                    .then(resp.status(201))
                     .catch(erro => console.log(erro));
         };
     }

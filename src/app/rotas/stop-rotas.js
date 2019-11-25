@@ -19,7 +19,6 @@ module.exports = (app) => {
     app.get(rotasStop.lista, stopControlador.lista());
 
     app.route(rotasStop.cadastro)
-        .get(stopControlador.formularioCadastro())
         .post(Stop.validacoes(), stopControlador.cadastra())
         .put(stopControlador.edita());
 
