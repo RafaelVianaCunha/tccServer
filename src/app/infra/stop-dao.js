@@ -8,10 +8,12 @@ class StopDao {
         return new Promise((resolve, reject) => {
             this._db.run(`
                 INSERT INTO stop (
-                    titulo, 
-                    preco,
-                    descricao
-                ) values (?,?,?)
+                    exchangeId,
+                    usuarioId,
+                    coinId,
+                    stop,
+                    lim
+                ) values (?,?,?,?,?)
                 `,
                 [
                     stop.titulo,
@@ -44,7 +46,6 @@ class StopDao {
     }
 
     buscaPorId(id) {
-
         return new Promise((resolve, reject) => {
             this._db.get(
                 `
@@ -89,7 +90,6 @@ class StopDao {
     }
 
     remove(id) {
-
         return new Promise((resolve, reject) => {
             this._db.get(
                 `
