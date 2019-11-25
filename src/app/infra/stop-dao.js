@@ -6,6 +6,7 @@ class StopDao {
 
     adiciona(stop) {
         return new Promise((resolve, reject) => {
+            console.log('stop');
             this._db.run(`
                 INSERT INTO stop (
                     exchangeId,
@@ -16,9 +17,11 @@ class StopDao {
                 ) values (?,?,?,?,?)
                 `,
                 [
-                    stop.titulo,
-                    stop.preco,
-                    stop.descricao
+                    stop.exchangeId,
+                    stop.usuarioId,
+                    stop.coinId,
+                    stop.stop,
+                    stop.lim
                 ],
                 function (err) {
                     if (err) {

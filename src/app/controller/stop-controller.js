@@ -9,8 +9,8 @@ class StopControlador {
         return {
             autenticadas: '/stop*',
             lista: '/stop',
-            cadastro: '/stop/form',
-            edicao: '/stop/form/:id',
+            cadastro: '/stop/cadastro',
+            edicao: '/stop/:id',
             delecao: '/stop/:id'
         };
     }
@@ -26,7 +26,7 @@ class StopControlador {
         };
     }
 
-    formularioEdicao() {
+    edicao() {
         return function(req, resp) {
             const id = req.params.id;
             const stopDao = new StopDao(db);
@@ -41,12 +41,15 @@ class StopControlador {
 
     cadastra() {
         return function(req, resp) {
+            console.log('aqui77777');
             console.log(req.body);
             const stopDao = new StopDao(db);
-            
+            var pagamento = JSON.parse(req);
+            console.log(pagamento);
             const erros = validationResult(req);
     
             if (!erros.isEmpty()) {
+                console.log(erros);
                 return resp.status(500).send(erro);
             }
     

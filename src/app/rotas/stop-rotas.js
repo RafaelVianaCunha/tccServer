@@ -22,7 +22,7 @@ module.exports = (app) => {
         .post(Stop.validacoes(), stopControlador.cadastra())
         .put(stopControlador.edita());
 
-    app.get(rotasStop.edicao, stopControlador.formularioEdicao());
+    app.get(rotasStop.edicao, stopControlador.edicao());
 
     app.delete(rotasStop.delecao, stopControlador.remove());
 };
