@@ -1,4 +1,4 @@
-const StopControlador = require('./stop-controlador');
+const StopControlador = require('./stop-controller');
 
 
 class BaseControlador {

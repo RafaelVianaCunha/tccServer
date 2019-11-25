@@ -1,9 +1,9 @@
-const StopControlador = require('../controladores/stop-controlador');
+const StopControlador = require('../controller/stop-controller');
 const stopControlador = new StopControlador();
 
 const Stop = require('../modelos/stop');
 
-const BaseControlador = require('../controladores/base-controlador');
+const BaseControlador = require('../controller/base-controller');
 
 module.exports = (app) => {
     const rotasStop = StopControlador.rotas();
